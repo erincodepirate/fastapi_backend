@@ -17,6 +17,11 @@ def get_db():
     finally:
         db.close()
 
+@app.delete('/product/{id}')
+def delete_product(id, db: Session = Depends(get_db)):
+    db.query(models.Product).filter(models.Product.id == id).delete(synchronize_session = False)
+    db.commit()
+    return {'Product deleted'}
 
 @app.get('/products')
 def products(db: Session = Depends(get_db)):
