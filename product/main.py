@@ -23,6 +23,15 @@ def delete_product(id, db: Session = Depends(get_db)):
     db.commit()
     return {'Product deleted'}
 
+@app.put('/product/{id}')
+def product(id, request: schemas.Product, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == id)
+    if not product.first():
+        return {'Product does not exist'}
+    product.update(request.dict())
+    db.commit()
+    return {'Product successfully updated'}
+
 @app.get('/products')
 def products(db: Session = Depends(get_db)):
     products = db.query(models.Product).all()
