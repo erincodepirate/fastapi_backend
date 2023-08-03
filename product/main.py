@@ -5,6 +5,7 @@ import models
 from database import engine, SessionLocal
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
+from typing import List
 
 app = FastAPI()
 
@@ -32,12 +33,12 @@ def product(id, request: schemas.Product, db: Session = Depends(get_db)):
     db.commit()
     return {'Product successfully updated'}
 
-@app.get('/products')
+@app.get('/products', response_model=List[schemas.DisplayProduct])
 def products(db: Session = Depends(get_db)):
     products = db.query(models.Product).all()
     return products
 
-@app.get('/product/{id}')
+@app.get('/product/{id}', response_model=schemas.DisplayProduct)
 def product(id, db: Session = Depends(get_db)):
     product = db.query(models.Product).filter(models.Product.id == id).first()
     return product
