@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 import schemas
 import models
@@ -43,7 +43,7 @@ def product(id, db: Session = Depends(get_db)):
     product = db.query(models.Product).filter(models.Product.id == id).first()
     return product
 
-@app.post('/product')
+@app.post('/product', status_code=status.HTTP_201_CREATED)
 def add(request: schemas.Product, db: Session = Depends(get_db)):
     new_product = models.Product(
         name=request.name,
