@@ -63,7 +63,7 @@ def add(request: schemas.Product, db: Session = Depends(get_db)):
     db.refresh(new_product)
     return request
 
-@app.post('/seller')
+@app.post('/seller', response_model=schemas.DisplaySeller)
 def create_seller(request: schemas.Seller, db: Session = Depends(get_db)):
     hashed_password = pwd_context.hash(request.password)
     new_seller = models.Seller(
