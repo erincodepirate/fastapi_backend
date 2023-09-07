@@ -5,13 +5,6 @@ class Product(BaseModel):
     description: str
     price: int
 
-class DisplayProduct(BaseModel):
-    name: str
-    description: str
-
-    class Config:
-        orm_mode = True
-
 class Seller(BaseModel):
     username: str
     email: str
@@ -20,6 +13,14 @@ class Seller(BaseModel):
 class DisplaySeller(BaseModel):
     username: str
     email: str
+
+    class Config:
+        orm_mode = True
+
+class DisplayProduct(BaseModel):
+    name: str
+    description: str
+    seller: DisplaySeller
 
     class Config:
         orm_mode = True
