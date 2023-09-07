@@ -7,3 +7,10 @@ class Product(Base):
     name = Column(String(length=50))
     description = Column(String(length=255))
     price = Column(Integer)
+
+class Seller(Base):
+    __tablename__ = 'sellers'
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(length=50))
+    email = Column(String(length=50))
+    password = Column(String(length=60))
